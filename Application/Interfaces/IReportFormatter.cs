@@ -4,5 +4,5 @@ namespace Application.Interfaces;
 
 public interface IReportFormatter
 {
-    public string Format(ClientsReport report);
+    string Format(ClientsReport report);
 }

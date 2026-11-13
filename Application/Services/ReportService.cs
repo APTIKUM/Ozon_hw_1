@@ -14,7 +14,8 @@ public class ReportService(
 
     public ClientsReport GenerateClientsReport(IReadOnlyCollection<long> clientIds)
     {
-        var distinctClientIds = clientIds.Distinct()
+        var distinctClientIds = clientIds
+            .Distinct()
             .ToList();
 
         var orders = _orderRepository.GetByClientIds(distinctClientIds);
@@ -23,7 +24,10 @@ public class ReportService(
             .Select(clientId => CreateClientSummary(clientId, orders))
             .ToList();
 
-        return new ClientsReport(summaries);
+        return new ClientsReport
+        {
+            ClientSummaries = summaries
+        };
     }
 
     public void WriteClientReport(ClientsReport clientsReport)

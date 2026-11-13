@@ -1,8 +1,8 @@
 ﻿namespace Domain.Reports;
 
-public class ClientsReport(IReadOnlyCollection<ClientSummary> clientSummaries)
+public class ClientsReport
 {
-    public IReadOnlyCollection<ClientSummary> ClientSummaries { get; } = clientSummaries;
+    public required IReadOnlyCollection<ClientSummary> ClientSummaries { get; init; }
 
-    public DateTime CreatedDateTime { get; } = DateTime.Now;
+    public DateTime CreatedDateTime { get; init; } = DateTime.Now;
 }

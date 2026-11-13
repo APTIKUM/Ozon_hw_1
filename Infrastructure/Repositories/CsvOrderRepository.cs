@@ -9,7 +9,7 @@ namespace Infrastructure.Repositories;
 
 public class CsvOrderRepository : IOrderRepository
 {
-    private const string FilePath = "orders_log.csv";
+    private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "orders_log.csv");
     private const string Delimiter = ",";
 
     public IReadOnlyCollection<Order> GetByClientIds(IReadOnlyCollection<long> clientIds)

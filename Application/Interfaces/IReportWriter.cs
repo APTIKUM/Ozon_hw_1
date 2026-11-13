@@ -4,5 +4,5 @@ namespace Application.Interfaces;
 
 public interface IReportWriter
 {
-    public void Write(ClientsReport report);
+    void Write(ClientsReport report);
 }

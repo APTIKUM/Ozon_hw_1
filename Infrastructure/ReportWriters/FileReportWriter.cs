@@ -9,7 +9,8 @@ public class FileReportWriter(IReportFormatter formatter) : IReportWriter
 
     public void Write(ClientsReport report)
     {
-        var fileName = $"Clients_Report_{report.CreatedDateTime:dd_MM_yyyy_HH_mm_ss}.txt";
+        var fileName =
+            $"Clients_Report_{report.CreatedDateTime:dd_MM_yyyy_HH_mm_ss}_{Guid.NewGuid():N}.txt";
 
         using var writer = new StreamWriter(fileName);
 

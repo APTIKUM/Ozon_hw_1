@@ -4,5 +4,5 @@ namespace Application.Interfaces;
 
 public interface IOrderRepository
 {
-    public IReadOnlyCollection<Order> GetByClientIds(IReadOnlyCollection<long> clientIds);
+    IReadOnlyCollection<Order> GetByClientIds(IReadOnlyCollection<long> clientIds);
 }
