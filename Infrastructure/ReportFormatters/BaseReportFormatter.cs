@@ -17,7 +17,9 @@ public class BaseReportFormatter : IReportFormatter
         sb.AppendLine("-----------------------------------------------------------------------");
 
         foreach (var summary in report.ClientSummaries)
+        {
             sb.AppendLine($"{summary.ClientId,-15} | {summary.OrdersSum,15:N2} | {summary.MostPurchasedItemName,-30}");
+        }
 
         sb.AppendLine("=======================================================================");
 

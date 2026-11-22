@@ -41,7 +41,10 @@ public class ReportService(
             .Where(order => order.ClientId == clientId)
             .ToList();
 
-        if (clientOrders.Count == 0) throw new ClientNotFoundException(clientId);
+        if (clientOrders.Count == 0)
+        {
+            throw new ClientNotFoundException(clientId);
+        }
 
         var orderItems = clientOrders
             .SelectMany(order => order.OrderItems)
