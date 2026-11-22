@@ -2,20 +2,20 @@
 
 namespace Infrastructure.Models;
 
-public class OrderCsvRow
+public sealed record OrderCsvRow
 {
     [Name("client_id")]
-    public long ClientId { get; set; }
+    public required long ClientId { get; init; }
 
     [Name("order_id")]
-    public long OrderId { get; set; }
+    public required long OrderId { get; init; }
 
     [Name("item_name")]
-    public string ItemName { get; set; }
+    public required string ItemName { get; init; }
 
     [Name("item_quantity")]
-    public int ItemQuantity { get; set; }
+    public required int ItemQuantity { get; init; }
 
     [Name("item_price")]
-    public decimal ItemPrice { get; set; }
+    public required decimal ItemPrice { get; init; }
 }

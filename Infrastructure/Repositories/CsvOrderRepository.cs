@@ -9,8 +9,8 @@ namespace Infrastructure.Repositories;
 
 public class CsvOrderRepository : IOrderRepository
 {
-    private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "orders_log.csv");
     private const string Delimiter = ",";
+    private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "orders_log.csv");
 
     public IReadOnlyCollection<Order> GetByClientIds(IReadOnlyCollection<long> clientIds)
     {
@@ -26,23 +26,14 @@ public class CsvOrderRepository : IOrderRepository
 
         var orders = rows
             .GroupBy(row => row.OrderId)
-            .Select(group => new Order
-            {
-                Id = group.Key,
-
-                ClientId = group.First().ClientId,
-
-                OrderItems = group.Select(row => new OrderItem
-                {
-                    Item = new Item
-                    {
-                        Name = row.ItemName,
-                        Price = row.ItemPrice
-                    },
-
-                    Quantity = row.ItemQuantity
-                }).ToList()
-            }).ToList();
+            .Select(group => new Order(
+                group.Key,
+                group.First().ClientId,
+                group.Select(row => new OrderItem(
+                    new Item(row.ItemName, row.ItemPrice),
+                    row.ItemQuantity)
+                ).ToList()
+            )).ToList();
 
         return orders;
     }

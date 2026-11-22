@@ -24,10 +24,7 @@ public class ReportService(
             .Select(clientId => CreateClientSummary(clientId, orders))
             .ToList();
 
-        return new ClientsReport
-        {
-            ClientSummaries = summaries
-        };
+        return new ClientsReport(summaries);
     }
 
     public void WriteClientReport(ClientsReport clientsReport)
