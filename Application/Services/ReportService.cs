@@ -24,10 +24,7 @@ public class ReportService(
             .Select(clientId => CreateClientSummary(clientId, orders))
             .ToList();
 
-        return new ClientsReport
-        {
-            ClientSummaries = summaries
-        };
+        return new ClientsReport(summaries);
     }
 
     public void WriteClientReport(ClientsReport clientsReport)
@@ -41,10 +38,7 @@ public class ReportService(
             .Where(order => order.ClientId == clientId)
             .ToList();
 
-        if (clientOrders.Count == 0)
-        {
-            throw new ClientNotFoundException(clientId);
-        }
+        if (clientOrders.Count == 0) throw new ClientNotFoundException(clientId);
 
         var orderItems = clientOrders
             .SelectMany(order => order.OrderItems)
