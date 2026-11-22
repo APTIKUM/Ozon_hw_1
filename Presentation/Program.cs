@@ -4,6 +4,7 @@ using Infrastructure.ReportFormatters;
 using Infrastructure.ReportWriters;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
+using Presentation;
 
 var services = new ServiceCollection();
 
@@ -11,13 +12,13 @@ services.AddSingleton<ReportService>();
 services.AddSingleton<IOrderRepository, CsvOrderRepository>();
 services.AddSingleton<IReportFormatter, BaseReportFormatter>();
 
-if (args.Length == 0)
+if (!ArgumentParser.TryParse(args, out var parsedArguments, out var parsingError))
 {
-    Console.Error.WriteLine("Specify writer: console or file");
+    Console.Error.WriteLine(parsingError);
     return 1;
 }
 
-switch (args[0])
+switch (parsedArguments?.Writer)
 {
     case "console":
         services.AddTransient<IReportWriter, ConsoleReportWriter>();
@@ -36,12 +37,7 @@ var reportService = provider.GetRequiredService<ReportService>();
 
 try
 {
-    var clientsIds = args
-        .Skip(1)
-        .Select(long.Parse)
-        .ToList();
-
-    var report = reportService.GenerateClientsReport(clientsIds);
+    var report = reportService.GenerateClientsReport(parsedArguments.ClientIds);
 
     reportService.WriteClientReport(report);
 
